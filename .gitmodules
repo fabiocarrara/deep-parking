@@ -1,0 +1,3 @@
+[submodule "pyffe"]
+	path = pyffe
+	url = https://github.com/fabiocarrara/pyffe
