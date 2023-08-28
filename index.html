@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CNR Parking Dataset - Dataset for visual occupancy detection of parking lots</title>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-97320150-3"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());	
+	  gtag('config', 'UA-97320150-3');
+	</script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<!-- Fonts! -->
+	<link href="http://fonts.googleapis.com/css?family=Roboto:400,300" rel="stylesheet" type="text/css">
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="css/weather-icons.min.css" rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="icon.png">
+</head>
+
+<body>
+    <header>
+		<h1 class="container">
+			<strong>CNRPark+EXT</strong><br>A Dataset for Visual Occupancy Detection of Parking Lots<br>
+			<small>
+                <a target="_blank" href="http://www.nmis.isti.cnr.it/amato/">Giuseppe Amato</a>,
+                <a target="_blank" href="https://scholar.google.it/citations?user=SZR6mXsAAAAJ&hl=en">Fabio Carrara</a>,
+                <a target="_blank" href="http://www.fabriziofalchi.it/">Fabrizio Falchi</a>,
+                <a target="_blank" href="http://www.nmis.isti.cnr.it/gennaro/">Claudio Gennaro</a>,
+                <a target="_blank" href="https://scholar.google.it/citations?user=pZID8mEAAAAJ&hl=it&oi=ao">Claudio Vairo</a>
+            </small>
+		</h1>
+    </header>
+    
+	<div class="container">        
+		<section class="description">
+            <div class="row morespace">
+                <div data-video="HnJYSWY60nA" data-startseconds="0" data-endseconds="38" id="youtube-player" class="col-md-7"></div>
+                <script src="https://www.youtube.com/iframe_api"></script>
+                <script type="text/javascript">
+                  function onYouTubeIframeAPIReady() {
+                    var ctrlq = document.getElementById("youtube-player");
+                    var player = new YT.Player('youtube-player', {
+                      height: 480,
+                      width: 640,
+                      playerVars: {controls: 0, end: 38, loop: 1, showinfo: 0, rel: 0},
+                      events: {
+                        'onReady': function(e) {
+                          e.target.cueVideoById({ 
+                            videoId: ctrlq.dataset.video,
+                            startSeconds: ctrlq.dataset.startseconds,
+                            endSeconds: ctrlq.dataset.endseconds
+                          });
+                          e.target.playVideo();
+                        }
+                      }
+                    }); 
+                  } 
+                </script>
+                <div class="col-md-5 intro">
+                    <p><strong>CNRPark+EXT</strong> is a dataset for visual occupancy detection of parking lots of roughly 150,000 labeled images (patches) of vacant and occupied parking spaces, built on a parking lot of 164 parking spaces.</p>
+                    <p>CNRPark+EXT extends <strong>CNRPark</strong>, a preliminary dataset composed by 12,000 images collected in different days of July 2015 from 2 cameras.</p>
+                    <p>The additional subset, called <strong>CNR-EXT</strong>, is composed by images collected from November 2015 to February 2016 under various weather conditions by 9 cameras with different perspectives and angles of view. CNR-EXT captures different situations of light conditions, and it includes partial occlusion patterns due to obstacles (trees, lampposts, other cars) and partial or global shadowed cars.</p>
+                    <p>The video shows the visual occupancy detection system based deployed at the CNR Research Area in Pisa, Italy. Predictions are made by the cameras, which run an efficient convolutional neural network classifier trained with CNRPark+EXT.</p>
+                </div>
+            </div>
+            <div class="row space">
+                <div class="table-responsive col-md-7">
+                    <p class="space">CNRPark+EXT is composed by two subsets collected during our research. In the following, the details of both subsets are reported, together with a preview of the data collected.</p>
+                    <table id="dataset-details" class="table table-striped container">
+                        <thead>
+                            <tr>
+                                <th class="right">Subset</th>
+                                <th class="center">Cams</th>
+                                <!-- <th>Avg. Slots / Camera</th> -->
+                                <th>Collection Period</th>
+                                <th>Weather</th>
+                                <th class="smaller right">Frames</th>
+                                <th class="smaller right">Patches</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>CNRPark</th>
+                                <td class="center">2</td>
+                                <!-- <td>51</td> -->
+                                <td>July 2015 (2 days)</td>
+                                <td><span class="wi wi-day-sunny"></span></td>
+                                <td class="right">242</td>
+                                <td class="right">12,584</td>
+                            </tr>
+                            <tr>
+                                <th>CNR-EXT</th>
+                                <td class="center">9</td>
+                                <!-- <td>35</td> -->
+                                <td>Nov. 2015 - Feb. 2016 (23 days)</td>
+                                <td><span class="wi wi-day-sunny"></span> <span class="wi wi-cloudy"></span> <span class="wi wi-rain"></span></td>
+                                <td class="right">4,081</td>
+                                <td class="right">144,965</td>
+                            </tr>
+                        </tbody>
+                        <caption align="bottom">Details of the CNRPark+EXT subsets.</caption>
+                    </table>
+                </div>
+                <figure id="dataset-preview" class="col-md-5">
+                    <p><img src="imgs/11busy.jpg"><img src="imgs/13busy.jpg"><img src="imgs/34busy.jpg"><img src="imgs/38busy.jpg"></p>
+                    <p><img src="imgs/11empty.jpg"><img src="imgs/13empty.jpg"><img src="imgs/34empty.jpg"><img src="imgs/38empty.jpg"></p>
+                    <figcaption>Examples from the dataset.</figcaption>
+                </figure>
+            </div>
+			<figure class="space">
+                <div id="cnr-ext" class="preview">
+                    <img class="placement" src="imgs/camera_placement.jpg">
+                    <img class="view" src="imgs/cam_1.jpg">
+                    <img class="view" src="imgs/cam_8.jpg">
+                </div>
+				<figcaption>Camera placement for the <strong>CNR-EXT subset</strong>, and an example of fields of view (2 of the 9 available cameras). </figcaption>
+			</figure>
+            <figure class="space">
+                <div id="cnrpark" class="preview">
+                    <img src="imgs/cam_a.jpg">
+                    <img src="imgs/cam_b.jpg">
+                </div>
+                <figcaption>Fields of view of the two cameras (A, B) of the <strong>CNRPark subset</strong>.</figcaption>
+			</figure>
+		</section>
+        
+        <section id="files">
+            <h3>Dataset Download</h3>
+            <p>You can download CNRPark+EXT using the following links:</p>
+            <ul>
+			    <li>
+					<p><a href="https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNRPark+EXT.csv">CNRPark+EXT.csv</a> (18.1 MB)</p>
+					<p>CSV collecting metadata for each patch of both CNRPark and CNR-EXT datasets</p>
+				</li>
+                <li>
+                    <p><a href="https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNRPark-Patches-150x150.zip">CNRPark-Patches-150x150.zip</a> (36.6 MB)</p>
+                    <p>segmented images (patches) of parking spaces belonging to the <strong>CNRPark</strong> preliminary subset.<br>
+                    Files follow this organization: <code>&lt;CAMERA&gt;/&lt;CLASS&gt;/YYYYMMDD_HHMM_&lt;SLOT_ID&gt;.jpg</code>, where:</p>
+                    <ul>
+                        <li><code>&lt;CAMERA&gt;</code> can be <code>A</code> or <code>B</code>,</li>
+                        <li><code>&lt;CLASS&gt;</code> can be <code>free</code> or <code>busy</code>,</li>
+                        <li><code>YYYYMMDD_HHMM</code> is the zero-padded 24-hour capture datetime,</li>
+                        <li><code>&lt;SLOT_ID&gt;</code> is a local ID given to the slot for that particular camera</li>
+                    </ul>
+                    
+                    <p><strong>E.g:</strong> <code>A/busy/20150703_1425_32.jpg</code></p>
+                    <!-- <p class="alert alert-warning"><strong>Notice</strong> Images</p> -->
+                </li>
+                <li>
+                    <p><a href="https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNR-EXT-Patches-150x150.zip">CNR-EXT-Patches-150x150.zip</a> (449.5 MB)</p>
+                    <p>segmented images (patches) of parking spaces belonging to the <strong>CNR-EXT</strong> subset.<br>
+                    Files follow this organization:<br>
+                    <code>PATCHES/&lt;WEATHER&gt;/&lt;CAPTURE_DATE&gt;/camera&lt;CAM_ID&gt;/&lt;W_ID&gt;_&lt;CAPTURE_DATE&gt;_&lt;CAPTURE_TIME&gt;_C0&lt;CAM_ID&gt;_&lt;SLOT_ID&gt;.jpg</code>,<br>
+                    where:</p>
+                    <ul>
+                        <li><code>&lt;WEATHER&gt;</code> can be <code>SUNNY</code>, <code>OVERCAST</code> or <code>RAINY</code>,</li>
+                        <li><code>&lt;CAPTURE_DATE&gt;</code> is the zero-padded <code>YYYY-MM-DD</code> formatted capture date,</li>
+                        <li><code>&lt;CAM_ID&gt;</code> is the number of the camera, ranging <code>1</code>-<code>9</code>,</li>
+                        <li><code>&lt;W_ID&gt;</code> is a weather identifier, that can be <code>S</code>, <code>O</code> or <code>R</code>,</li>
+                        <li><code>&lt;CAPTURE_TIME&gt;</code> is the zero-padded 24-hour <code>HH.MM</code> formatted capture time,</li>
+                        <li><code>&lt;SLOT_ID&gt;</code> is a <strong>global ID</strong> given to the monitored slot; this can be used to uniquely identify a slot in the CNR-EXT dataset.</li>
+                    </ul>
+                    
+                    <p><strong>E.g:</strong> <code>PATCHES/SUNNY/2015-11-22/camera6/S_2015-11-22_09.47_C06_205.jpg</code></p>
+                    <p>The <code>LABELS</code> folder contains a list file for each split of the dataset used in our experiments. Each line in list files follow this format: <code>&lt;IMAGE_PATH&gt; &lt;LABEL&gt;</code>, where:</p>
+                    <ul>
+                        <li><code>&lt;IMAGE_PATH&gt;</code> is the path to a slot image,</li>
+                        <li><code>&lt;LABEL&gt;</code> is <code>0</code> for <code>free</code>, <code>1</code> for <code>busy</code>.</li>
+                    </ul>
+                </li>
+				<li>
+					<p><a href="https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNR-EXT_FULL_IMAGE_1000x750.tar">CNR-EXT_FULL_IMAGE_1000x750.tar</a> (1.1 GB)</p>
+					<p>full frames of the cameras belonging to the <strong>CNR-EXT</strong> subset. Images have been downsampled from 2592x1944 to 1000x750 due to privacy issues.<br>
+					Files follow this organization:<br>
+					<code>FULL_IMAGE_1000x750/&lt;WEATHER&gt;/&lt;CAPTURE_DATE&gt;/camera&lt;CAM_ID&gt;/&lt;CAPTURE_DATE&gt;_&lt;CAPTURE_TIME&gt;.jpg</code>,<br>
+					where:</p>
+					<ul>
+						<li><code>&lt;WEATHER&gt;</code> can be <code>SUNNY</code>, <code>OVERCAST</code> or <code>RAINY</code>,</li>
+					    <li><code>&lt;CAPTURE_DATE&gt;</code> is the zero-padded <code>YYYY-MM-DD</code> formatted capture date,</li>
+					    <li><code>&lt;CAM_ID&gt;</code> is the number of the camera, ranging <code>1</code>-<code>9</code>,</li>
+					    <li><code>&lt;CAPTURE_TIME&gt;</code> is the zero-padded 24-hour <code>HHMM</code> formatted capture time.</li>
+					</ul>
+					<p>The archive contains also 9 CSV files (one per camera) containing the bounding boxes of each parking space with which patches have been segmented. Pixel coordinates of the bouding boxes refer to the 2592x1944 version of the image and need to be rescaled to match the 1000x750 version.</p>
+				</li>
+                <li>
+                    <p><a href="https://github.com/fabiocarrara/deep-parking/releases/download/archive/splits.zip">splits.zip</a> (27.2 MB)</p>
+                    <p>all the splits used in our experiments. Those splits combine our datasets and also third-party datasets (such as <a href="https://web.inf.ufpr.br/vri/databases/parking-lot-database/" target="_blank">PKLot</a>).
+                </li>
+            </ul>
+        </section>
+        
+        <section class="trained-models">
+			<h2>Trained Models</h2>
+			<p>Here you can download the trained models used in our experiments. Models have been trained with <a href="http://caffe.berkeleyvision.org/">BVLC Caffe</a>.</p>
+            <ul>
+                <li><a href="https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNRPark+EXT_Trained_Models_mAlexNet.zip">CNRPark+EXT_Trained_Models_mAlexNet.zip</a> (1.7 MB)<br>
+                    <p>trained models used in the experiments presented in <samp><a href="#paper1">[1]</a></samp>. This archive contains only models with <em>mAlexNet</em> architecture.</p>
+                </li>
+                
+                <li><a href="https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNRPark+EXT_Trained_Models_AlexNet.zip">CNRPark+EXT_Trained_Models_AlexNet.zip</a> (1.7 GB)<br>
+                    <p>trained models used in the experiments presented in <samp><a href="#paper1">[1]</a></samp>. This archive contains only models with <em>AlexNet</em> architecture.</p>
+                </li>
+                
+                <li><a href="https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNRPark-Trained-Models.zip">CNRPark-Trained-Models.zip</a> (3.2 MB)<br>
+                    <p>contains the trained models used in the experiments presented in <samp><a href="#paper2">[2]</a></samp>.</p>
+                </li>
+            </ul>
+			<!-- <p>You can check the performance of the available models in the <a href="#experimental-results">Experimental Results</a> section.</p> -->
+			<p>The code for reproducing the experiments is available on GitHub: <a href="https://github.com/fabiocarrara/deep-parking">https://github.com/fabiocarrara/deep-parking</a></p>
+		</section>
+
+		<section class="papers">
+			<h2>Papers</h2>
+            <div class="paper container row">
+                <a class="paper-thumbnail col-md-2" target="_blank" href="http://www.sciencedirect.com/science/article/pii/S095741741630598X">
+                    <img src="imgs/thumbs/eswa_p12.jpg">
+                    <img src="imgs/thumbs/eswa_p11.jpg">
+                    <img src="imgs/thumbs/eswa_p10.jpg">
+                    <img src="imgs/thumbs/eswa_p9.jpg">
+                    <img src="imgs/thumbs/eswa_p8.jpg">
+                    <img src="imgs/thumbs/eswa_p7.jpg">                    
+                    <img src="imgs/thumbs/eswa_p6.jpg">
+                    <img src="imgs/thumbs/eswa_p5.jpg">
+                    <img src="imgs/thumbs/eswa_p4.jpg">
+                    <img src="imgs/thumbs/eswa_p3.jpg">
+                    <img src="imgs/thumbs/eswa_p2.jpg">
+                    <img src="imgs/thumbs/eswa_p1.jpg">
+                    <img src="imgs/thumbs/eswa_p0.jpg">
+                </a>
+                <div class="paper-details col-md-10">
+                    <h3 id="paper1"><a target="_blank" href="http://www.sciencedirect.com/science/article/pii/S095741741630598X"><samp>[1]</samp> Deep learning for decentralized parking lot occupancy detection</a><br>
+                    <small>G Amato, F Carrara, F Falchi, C Gennaro, C Meghini, C Vairo<br>
+                    Expert Systems with Applications 72, 327-334</small></h3>
+                    <p><small>A smart camera is a vision system capable of extracting application-specific information from the captured images. The paper proposes a decentralized and efficient solution for visual parking lot occupancy detection based on a deep Convolutional Neural Network (CNN) specifically designed for smart cameras. This solution is compared with state-of-the-art approaches using two visual datasets: PKLot, already existing in literature, and CNRPark+EXT. The former is an existing dataset, that allowed us to exhaustively compare with previous works. The latter dataset has been created in the context of this research, accumulating data across various seasons of the year, to test our approach in particularly challenging situations, exhibiting occlusions, and diverse and difficult viewpoints. This dataset is public available to the scientific community and is another contribution of our research. Our experiments show that our solution outperforms and generalizes the best performing approaches on both datasets. The performance of our proposed CNN architecture on the parking lot occupancy detection task, is comparable to the well-known AlexNet, which is three orders of magnitude larger.</small></p>
+                </div>
+            </div>
+            <div class="paper container row space">
+                <a class="paper-thumbnail col-md-2" target="_blank" href="http://ieeexplore.ieee.org/abstract/document/7543901/">
+                    <img src="imgs/thumbs/iscc_p6.jpg">                    
+                    <img src="imgs/thumbs/iscc_p5.jpg">
+                    <img src="imgs/thumbs/iscc_p4.jpg">
+                    <img src="imgs/thumbs/iscc_p3.jpg">
+                    <img src="imgs/thumbs/iscc_p2.jpg">
+                    <img src="imgs/thumbs/iscc_p1.jpg">
+                    <img src="imgs/thumbs/iscc_p0.jpg">
+                </a>
+                <div class="paper-details col-md-10">
+                    <h3 id="paper2"><a target="_blank" href="http://ieeexplore.ieee.org/abstract/document/7543901/"><samp>[2]</samp> Car parking occupancy detection using smart camera networks and deep learning</a><br>
+                    <small>G Amato, F Carrara, F Falchi, C Gennaro, C Vairo<br>
+                    IEEE Symposium on Computers and Communication (ISCC) 2016, 1212-1217</small></h3>
+                    <p><small>This paper presents an approach for real-time car parking occupancy detection that uses a Convolutional Neural Network (CNN) classifier running on-board of a smart camera with limited resources. Experiments show that our technique is very effective and robust to light condition changes, presence of shadows, and partial occlusions. The detection is reliable, even when tests are performed using images captured from a viewpoint different than the viewpoint used for training. In addition, it also demonstrates its robustness when training and tests are executed on different parking lots. We have tested and compared our solution against state of the art techniques, using a reference benchmark for parking occupancy detection. We have also produced and made publicly available an additional dataset that contains images of the parking lot taken from different viewpoints and in different days with different light conditions. The dataset captures occlusion and shadows that might disturb the classification of the parking spaces status.</small></p>
+                </div>
+            </div>
+			<pre>@article{amato2017deep,
+  title={Deep learning for decentralized parking lot occupancy detection},
+  author={Amato, Giuseppe and Carrara, Fabio and Falchi, Fabrizio and Gennaro, Claudio and Meghini, Carlo and Vairo, Claudio},
+  journal={Expert Systems with Applications},
+  volume={72},
+  pages={327--334},
+  year={2017},
+  publisher={Pergamon}
+}
+            
+@inproceedings{amato2016car,
+  title={Car parking occupancy detection using smart camera networks and deep learning},
+  author={Amato, Giuseppe and Carrara, Fabio and Falchi, Fabrizio and Gennaro, Claudio and Vairo, Claudio},
+  booktitle={Computers and Communication (ISCC), 2016 IEEE Symposium on},
+  pages={1212--1217},
+  year={2016},
+  organization={IEEE}
+}</pre>
+		</section>
+
+        <section class="slides">
+        <h2>Slides</h2>
+            <div class="embed-container">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSy38HNdpTuiwPVktJfmcj5iwm-v7Y2O6pPpQ63eSFwKbBRvhbHDr3mReRnsSEBdSkw8ipHgUrmd6h2/embed?start=false&loop=false&delayms=3000" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" class="row container"></iframe>
+            </div>
+        </section>
+
+		<footer>
+			<div class="acks">
+			    <p>The CNRPark-EXT dataset is licensed under a <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Data Commons Open Database License (ODbL) v1.0</a>.</p>
+			    <p>The public availability of results and data of research, in order to ensure transparency and sharing with the scientific community, is in accordance with EU and national law on data protection, in particular, Directive 95/46/EC and the corresponding Italian national law: Legislative Decree n. 196/2003 – Personal data protection code - and Code of conduct and professional practice applying to processing of personal data for statistical and scientific purposes (Published in the Official Journal no. 190 of August 14, 2004)<small>*</small></p>
+                <p><small>* The Directive will be replaced with the new General Data Protection Regulation No 2016/679 that will apply from 25 May 2018.</small></p>
+				<p>This work has been partially funded by the DIITET Department of CNR, in the framework of the ”Renewable Energy and ICT for Sustainability Energy” project. We gratefully acknowledge the support of NVIDIA Corporation with the donation of a Tesla K40 GPU used for this research.</p>
+			</div>
+		</footer>
+	</div>
+</body>
+
+</html>
